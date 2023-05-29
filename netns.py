@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     for ns in p.stdout.split(b'\n'):
         if b"netns0" in ns:
-            sh = spawn(f'ip netns exec netns0 zsh -c "su {user}"')
+            sh = spawn(f'ip netns exec netns0 zsh -c "su {USER}"')
             sys.exit(sh.interact())
 
     routes = subprocess.run(["ip", "route", "show", "dev", IFACE], capture_output=True)
@@ -33,5 +33,5 @@ if __name__ == "__main__":
     print(subprocess.run(["ip", "netns", "exec", "netns0", "ip", "addr", "add", IP, "peer", gateway + "/32", "dev", "macvlan0"]))
     print(subprocess.run(["ip", "netns", "exec", "netns0", "ip", "r", "add", "default", "via", gateway, "dev", "macvlan0"]))
 
-    sh = spawn(f'ip netns exec netns0 zsh -c "su {user}"')
+    sh = spawn(f'ip netns exec netns0 zsh -c "su {USER}"')
     sys.exit(sh.interact())
